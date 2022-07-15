@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Registro"
+    android:background="@color/color_fondo"
     android:padding="10dp"
-    android:background="@color/color_fondo">
+    tools:context=".Registro">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,19 +16,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginBottom="10dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/txtTitleRegistro"
-                android:textSize="@dimen/sizeTitle"
-                android:textStyle="bold"
-                android:textColor="@color/color_botones"
                 android:layout_marginBottom="0dp"
-                android:textAlignment="center"/>
+                android:text="@string/txtTitleRegistro"
+                android:textAlignment="center"
+                android:textColor="@color/color_botones"
+                android:textSize="@dimen/sizeTitle"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -37,55 +37,69 @@
                 app:srcCompat="@drawable/tomate_muerto" />
         </LinearLayout>
 
-
-
-
-        <EditText
-            android:id="@+id/txtCorreo"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="@dimen/mg_tb"
-            android:hint="@string/txtEmail"/>
+            android:layout_marginBottom="@dimen/mg_tb">
+
+            <EditText
+                android:id="@+id/txtCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="@string/txtEmail"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <EditText
-            android:id="@+id/txtPassword"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/mg_tb"
-            android:inputType="textPassword"
-            android:hint="@string/txtPassword"/>
+            android:layout_marginBottom="@dimen/mg_tb">
+
+            <EditText
+                android:id="@+id/txtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="@string/txtPassword"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <EditText
-            android:id="@+id/txtNombre"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/mg_tb"
-          android:hint="@string/txtNombre"/>
+            android:layout_marginBottom="@dimen/mg_tb">
+
+            <EditText
+                android:id="@+id/txtNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="@string/txtNombre" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/txtFecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="@dimen/mg_tb"
+            android:text="@string/txtFecha"
             android:textAlignment="center"
             android:textSize="16dp"
-            android:textStyle="bold"
-            android:text="@string/txtFecha"
-            />
+            android:textStyle="bold" />
 
         <Button
-            android:layout_marginTop="20dp"
             android:id="@+id/btnRegistrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btnRegistrar"
-            android:backgroundTint="@color/color_botones"/>
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/color_botones"
+            android:text="@string/btnRegistrar" />
     </LinearLayout>
-
-
 
 
 </RelativeLayout>

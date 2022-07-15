@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = null;
 
         if (id == btnLogin.getId()){
+            intent = new Intent(this, Login.class);
 
         }else if (id == btnRegistro.getId()){
             intent = new Intent(this, Registro.class);

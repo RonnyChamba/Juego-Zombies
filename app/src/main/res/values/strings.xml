@@ -17,5 +17,11 @@
 
     <dimen name="mg_tb">10dp</dimen>
 
+    <!-- Activity Login-->
+
+    <string name="txtTitleLogin">Login</string>
+    <string name="txtCorreoLogin">Correo Electrónico</string>
+    <string name="txtPassLogin">Contraseña</string>
+    <string name="txtBtnLogin">Ingresar</string>
 
 </resources>
