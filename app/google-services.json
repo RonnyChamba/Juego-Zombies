@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "873798600241",
+    "project_id": "proyecto-zombies",
+    "storage_bucket": "proyecto-zombies.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873798600241:android:4568227dc1d5fc38137710",
+        "android_client_info": {
+          "package_name": "com.example.juegozombie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "873798600241-6pem7dk59dc356p7tngtnjveot6hu4no.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlkak8Msxi-L_cnWakKmB5xdhZuRLa0Dg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "873798600241-6pem7dk59dc356p7tngtnjveot6hu4no.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
