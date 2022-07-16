@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:textSize="@dimen/btnFontSize"
             android:background="@drawable/boton_personalizado"
             app:backgroundTint ="@null"
             android:text="@string/btnLogin" />
@@ -28,6 +29,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/boton_personalizado"
             app:backgroundTint ="@null"
+            android:textSize="@dimen/btnFontSize"
             android:text="@string/btnRegistro"
             />
     </LinearLayout>

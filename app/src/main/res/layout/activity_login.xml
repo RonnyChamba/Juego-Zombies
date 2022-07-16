@@ -20,6 +20,7 @@
             android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/txtTitleLogin"
                 android:layout_width="match_parent"
                 android:text="@string/txtTitleLogin"
                 android:textSize="@dimen/sizeTitle"
@@ -72,6 +73,7 @@
             android:layout_height="wrap_content"
             android:text="@string/txtBtnLogin"
             android:layout_marginTop="15dp"
+            android:textSize="@dimen/btnFontSize"
             app:backgroundTint ="@null"
             android:background="@drawable/boton_personalizado"/>
     </LinearLayout>

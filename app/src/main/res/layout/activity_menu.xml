@@ -20,6 +20,7 @@
             android:orientation="vertical"
             android:layout_marginBottom="10dp">
             <TextView
+                android:id="@+id/txtTitleMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
@@ -43,18 +44,21 @@
                 android:layout_height="200dp"
                 app:srcCompat="@drawable/calabaza_login" />
             <TextView
-                android:id="@+id/txtCorreoMenu"
+                android:id="@+id/txtCorreoJugadorMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textStyle="bold"
+                android:layout_marginBottom="@dimen/mg_tb"
+                android:textSize="15dp"
                 android:text="palyer@gmail.co,"/>
             <TextView
-                android:id="@+id/txtNombreMenu"
+                android:id="@+id/txtNombreJugadorMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textStyle="bold"
+                android:textSize="15dp"
                 android:text="Player 1"/>
 
 
@@ -63,15 +67,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:orientation="vertical">
 
 
             <TextView
+                android:id="@+id/txtSubTitleMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textSize="@dimen/sizeTitle"
+
                 android:text="@string/txtSubTitleMenu"
                 android:layout_marginBottom="10dp"/>
 
@@ -83,6 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btnJugarMenu"
+                android:textSize="@dimen/btnFontSize"
                 android:layout_marginBottom="@dimen/mg_tb"
 
                 />
@@ -93,6 +101,7 @@
                 android:text="@string/btnPuntuMenu"
                 android:background="@drawable/boton_personalizado"
                 app:backgroundTint ="@null"
+                android:textSize="@dimen/btnFontSize"
                 android:layout_marginBottom="@dimen/mg_tb"/>
 
             <Button
@@ -102,6 +111,7 @@
                 android:text="@string/btnAcercaMenu"
                 android:background="@drawable/boton_personalizado"
                 app:backgroundTint ="@null"
+                android:textSize="@dimen/btnFontSize"
                 android:layout_marginBottom="@dimen/mg_tb"/>
 
             <Button
@@ -110,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/btnSalirMenu"
                 android:background="@drawable/boton_personalizado"
+                android:textSize="@dimen/btnFontSize"
                 app:backgroundTint ="@null"/>
 
 

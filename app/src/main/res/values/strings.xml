@@ -16,6 +16,7 @@
     <string name="txtFecha">Fecha</string>
 
     <dimen name="mg_tb">10dp</dimen>
+    <dimen name="btnFontSize">18dp</dimen>
 
     <!-- Activity Login-->
 

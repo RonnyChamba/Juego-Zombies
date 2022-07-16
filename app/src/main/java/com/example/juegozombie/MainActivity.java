@@ -3,9 +3,12 @@ package com.example.juegozombie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.juegozombie.commons.Disegno;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void  initApp(){
         findByWidget();
         setListenerClick();
+        setTypeFont();
     }
     private void  findByWidget(){
 
@@ -34,6 +38,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin.setOnClickListener(this);
         btnRegistro.setOnClickListener(this);
 
+    }
+    private void setTypeFont(){
+        Typeface typeface = Disegno.getTypeFace(this);
+        btnLogin.setTypeface(typeface);
+        btnRegistro.setTypeface(typeface);
     }
 
     @Override

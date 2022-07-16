@@ -3,13 +3,16 @@ package com.example.juegozombie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.juegozombie.commons.Disegno;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -21,6 +24,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener {
 
     private Button btnLogin;
 
+    private TextView txtTitle;
     private FirebaseAuth auth; // Firebase Autenticacion
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +37,13 @@ public class Login extends AppCompatActivity  implements View.OnClickListener {
     private void initApp(){
         findByWidget();
         setListenerClick();
+        setTypeFont();
         // auth.initializeApp(this);
         auth = FirebaseAuth.getInstance();
     }
 
     private void findByWidget(){
+        txtTitle = findViewById(R.id.txtTitleLogin);
         txtEmailLogin = findViewById(R.id.emailLogin);
         txtPassLogin = findViewById(R.id.passLogin);
         btnLogin = findViewById(R.id.btnIngresarLogin);
@@ -46,6 +52,12 @@ public class Login extends AppCompatActivity  implements View.OnClickListener {
     private void setListenerClick(){
 
         btnLogin.setOnClickListener(this);
+    }
+
+    private void setTypeFont(){
+        Typeface typeface = Disegno.getTypeFace(this);
+        txtTitle.setTypeface(typeface);
+        btnLogin.setTypeface(typeface);
     }
 
     @Override

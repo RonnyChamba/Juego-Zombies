@@ -3,11 +3,15 @@ package com.example.juegozombie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.juegozombie.commons.Disegno;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,6 +25,12 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
     private Button btnPuntuacion;
     private Button btnAcercaDe;
     private Button btnCerrarSesion;
+
+
+    private TextView txtTitleMenu;
+    private TextView txtSubTitleMenu;
+    private TextView txtCorreoJugaMenu;
+    private TextView txtNombreJugaMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +49,19 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
     private void initApp() {
         findByWidget();
         setListenerClick();
+        setTypeFont();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
     }
 
 
     private void findByWidget() {
+
+        txtTitleMenu = findViewById(R.id.txtTitleMenu);
+        txtSubTitleMenu = findViewById(R.id.txtSubTitleMenu);
+        txtCorreoJugaMenu = findViewById(R.id.txtCorreoJugadorMenu);
+        txtNombreJugaMenu = findViewById(R.id.txtNombreJugadorMenu);
+
         btnJugar = findViewById(R.id.btnJugar);
         btnPuntuacion = findViewById(R.id.btnPuntaciones);
         btnAcercaDe = findViewById(R.id.btnHacerca);
@@ -55,6 +72,19 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         btnAcercaDe.setOnClickListener(this);
         btnJugar.setOnClickListener(this);
         btnCerrarSesion.setOnClickListener(this);
+    }
+    private void setTypeFont(){
+
+        Typeface typeface = Disegno.getTypeFace(this);
+        txtTitleMenu.setTypeface(typeface);
+        txtSubTitleMenu.setTypeface(typeface);
+        txtCorreoJugaMenu.setTypeface(typeface);
+        txtNombreJugaMenu.setTypeface(typeface);
+        btnJugar.setTypeface(typeface);
+        btnPuntuacion.setTypeface(typeface);
+        btnAcercaDe.setTypeface(typeface);
+        btnCerrarSesion.setTypeface(typeface);
+
     }
 
     private void usuarioLogeado() {

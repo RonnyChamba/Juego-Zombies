@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Path;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.juegozombie.commons.Constantes;
+import com.example.juegozombie.commons.Disegno;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -39,6 +41,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
 
     private Button btnRegistrar;
 
+    private TextView txtTitle;
     private FirebaseAuth auth; // Firebase Autenticacion
 
     @Override
@@ -52,6 +55,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
         findByWidget();
         setListenerClick();
         setFecha();
+        setTypeFont();
 
        // auth.initializeApp(this);
         auth = FirebaseAuth.getInstance();
@@ -59,6 +63,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
 
     private void findByWidget() {
 
+        txtTitle = findViewById(R.id.txtTitleRegistro);
         txtEmail = findViewById(R.id.txtCorreo);
         txtNombre = findViewById(R.id.txtNombre);
         txtPassword = findViewById(R.id.txtPassword);
@@ -77,6 +82,13 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
         btnRegistrar.setOnClickListener(this);
     }
 
+
+    private void setTypeFont(){
+        Typeface typeface = Disegno.getTypeFace(this);
+        txtTitle.setTypeface(typeface);
+        btnRegistrar.setTypeface(typeface);
+
+    }
     @Override
     public void onClick(View view) {
 
