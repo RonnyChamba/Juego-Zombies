@@ -22,12 +22,10 @@ public class splash extends AppCompatActivity {
          * Handler() permite ejecutar un codigo en cierta cantidad de segundos
          */
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent  = new Intent(splash.this, MainActivity.class);
-                startActivity(intent);
-            }
+        new Handler().postDelayed(() -> {
+            
+            Intent intent  = new Intent(splash.this, Menu.class);
+            startActivity(intent);
         }, Constantes.DURACION_SPLASH);
 
     }
