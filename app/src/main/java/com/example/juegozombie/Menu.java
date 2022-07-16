@@ -17,6 +17,9 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
 
     private FirebaseAuth auth;
     private FirebaseUser user;
+    private Button btnJugar;
+    private Button btnPuntuacion;
+    private Button btnAcercaDe;
     private Button btnCerrarSesion;
 
     @Override
@@ -42,10 +45,15 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
 
 
     private void findByWidget() {
+        btnJugar = findViewById(R.id.btnJugar);
+        btnPuntuacion = findViewById(R.id.btnPuntaciones);
+        btnAcercaDe = findViewById(R.id.btnHacerca);
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
     }
-
     private void setListenerClick() {
+        btnPuntuacion.setOnClickListener(this);
+        btnAcercaDe.setOnClickListener(this);
+        btnJugar.setOnClickListener(this);
         btnCerrarSesion.setOnClickListener(this);
     }
 
@@ -64,10 +72,16 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
     public void onClick(View view) {
 
         int id = view.getId();
+         if (id == btnJugar.getId()){
 
-        if (id == btnCerrarSesion.getId()){
-            cerrarSesion();
-        }
+
+        }else if (id == btnPuntuacion.getId()){
+
+         }else if (id == btnAcercaDe.getId()){
+         }
+         else if (id == btnCerrarSesion.getId()){
+             cerrarSesion();
+         }
     }
     private void cerrarSesion(){
         auth.signOut();

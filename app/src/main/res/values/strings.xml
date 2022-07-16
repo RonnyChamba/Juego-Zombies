@@ -24,4 +24,14 @@
     <string name="txtPassLogin">Contraseña</string>
     <string name="txtBtnLogin">Ingresar</string>
 
+    <!-- Activity Menu-->
+    <string name="txtTitleMenu">MI PUNTUACION</string>
+    <string name="txtSubTitleMenu">MENU</string>
+
+    <string name="btnJugarMenu">JUGAR</string>
+    <string name="btnPuntuMenu">PUNTUACIONES</string>
+    <string name="btnAcercaMenu">ACERCA DE</string>
+    <string name="btnSalirMenu">SALIR</string>
+
+
 </resources>

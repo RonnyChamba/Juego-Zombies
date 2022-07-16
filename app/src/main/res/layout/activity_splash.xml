@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F44336"
+    android:gravity="center"
     tools:context=".splash">
 
     <ImageView
@@ -12,6 +13,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#E86565"
-        app:srcCompat="@drawable/tomate_muerto" />
+        app:srcCompat="@drawable/icono_app" />
 </LinearLayout>

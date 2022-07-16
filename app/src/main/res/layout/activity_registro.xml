@@ -32,9 +32,9 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:srcCompat="@drawable/tomate_muerto" />
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:srcCompat="@drawable/calabaza_registro" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -97,7 +97,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/color_botones"
+            android:background="@drawable/boton_personalizado"
+            app:backgroundTint ="@null"
             android:text="@string/btnRegistrar" />
     </LinearLayout>
 
