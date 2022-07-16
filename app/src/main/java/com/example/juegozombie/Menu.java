@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.juegozombie.commons.Constantes;
 import com.example.juegozombie.commons.Disegno;
+import com.example.juegozombie.entities.Jugador;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,9 +42,11 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
 
     private TextView txtTitleMenu;
     private TextView txtZombieMenu;
+    private TextView txtUidMenu;
     private TextView txtSubTitleMenu;
     private TextView txtCorreoJugaMenu;
     private TextView txtNombreJugaMenu;
+    private Jugador currentPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,7 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
     private void findByWidget() {
 
         txtTitleMenu = findViewById(R.id.txtTitleMenu);
+        txtUidMenu = findViewById(R.id.txtUidMenu);
         txtZombieMenu = findViewById(R.id.txtZombiesMenu);
         txtSubTitleMenu = findViewById(R.id.txtSubTitleMenu);
         txtCorreoJugaMenu = findViewById(R.id.txtCorreoJugadorMenu);
@@ -125,7 +129,7 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
 
         int id = view.getId();
          if (id == btnJugar.getId()){
-
+             jugar();
 
         }else if (id == btnPuntuacion.getId()){
 
@@ -151,9 +155,20 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 DataSnapshot ds = snapshot.getChildren().iterator().next();
-                txtZombieMenu.setText(ds.child("Zombies").getValue().toString());
-                txtCorreoJugaMenu.setText(ds.child("Email").getValue().toString());
-                txtNombreJugaMenu.setText(ds.child("Nombres").getValue().toString());
+
+                currentPlayer = new Jugador();
+
+                currentPlayer.setuId(ds.child("Uid").getValue().toString());
+                currentPlayer.setPuntaje( Integer.parseInt(ds.child("Zombies").getValue().toString()));
+                currentPlayer.setNombres(ds.child("Nombres").getValue().toString());
+                currentPlayer.setEmail(ds.child("Email").getValue().toString());
+
+                txtUidMenu.setText(currentPlayer.getuId());
+                // Obliatorio convertir en String
+                txtZombieMenu.setText(""+currentPlayer.getPuntaje());
+                txtCorreoJugaMenu.setText(currentPlayer.getEmail());
+                txtNombreJugaMenu.setText(currentPlayer.getNombres());
+
             }
 
             @Override
@@ -161,5 +176,12 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
 
             }
         });
+    }
+
+    private void  jugar(){
+
+        Intent intent = new Intent(this, EscenarioJuego.class);
+        intent.putExtra("jugadorActual",  currentPlayer);
+        startActivity(intent);
     }
 }
