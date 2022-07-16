@@ -1,5 +1,6 @@
 package com.example.juegozombie;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,16 +12,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.juegozombie.commons.Constantes;
 import com.example.juegozombie.commons.Disegno;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Iterator;
 
 public class Menu extends AppCompatActivity  implements View.OnClickListener {
 
 
     private FirebaseAuth auth;
     private FirebaseUser user;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference; // jugadores
     private Button btnJugar;
     private Button btnPuntuacion;
     private Button btnAcercaDe;
@@ -28,6 +40,7 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
 
 
     private TextView txtTitleMenu;
+    private TextView txtZombieMenu;
     private TextView txtSubTitleMenu;
     private TextView txtCorreoJugaMenu;
     private TextView txtNombreJugaMenu;
@@ -50,14 +63,22 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         findByWidget();
         setListenerClick();
         setTypeFont();
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
+        initFirebase();
     }
 
+    private void initFirebase(){
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference(Constantes.NAME_BD);
+    }
 
     private void findByWidget() {
 
         txtTitleMenu = findViewById(R.id.txtTitleMenu);
+        txtZombieMenu = findViewById(R.id.txtZombiesMenu);
         txtSubTitleMenu = findViewById(R.id.txtSubTitleMenu);
         txtCorreoJugaMenu = findViewById(R.id.txtCorreoJugadorMenu);
         txtNombreJugaMenu = findViewById(R.id.txtNombreJugadorMenu);
@@ -90,6 +111,7 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
     private void usuarioLogeado() {
 
         if (user != null) {
+            consulta();
             Toast.makeText(this, "en linea", Toast.LENGTH_LONG).show();
         } else {
             startActivity(new Intent(this, MainActivity.class));
@@ -118,5 +140,26 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         startActivity(new Intent(Menu.this, MainActivity.class));
         Toast.makeText(this, "Sesión cerrada exitosamente", Toast.LENGTH_SHORT).show();
 
+    }
+
+    private void consulta (){
+        Query query = databaseReference.orderByChild("Email").equalTo(user.getEmail());
+
+        query.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                DataSnapshot ds = snapshot.getChildren().iterator().next();
+                txtZombieMenu.setText(ds.child("Zombies").getValue().toString());
+                txtCorreoJugaMenu.setText(ds.child("Email").getValue().toString());
+                txtNombreJugaMenu.setText(ds.child("Nombres").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
