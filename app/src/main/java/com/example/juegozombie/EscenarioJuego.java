@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -16,6 +18,8 @@ import com.example.juegozombie.commons.Disegno;
 import com.example.juegozombie.entities.Jugador;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class EscenarioJuego extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,6 +35,7 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
     private int widthDisplay; // anchoPantalla
     private int heightDisplay; // altoPantalla
     private  int contador;
+    private  final int  delayZombie = 400;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +49,8 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         setListenerClick();
         getDataPlayer();
         sizeDisplay();
+        starPlay();
+        cuentaAtras();
     }
     private void findByWidget() {
 
@@ -84,14 +91,16 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
 
          imgZombie.setImageResource(R.drawable.zombie_muerto);
 
-         new Handler().postDelayed((  ()-> {
+        Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        v.vibrate(300);
+
+        /* new Handler().postDelayed((  ()-> {
              
-             imgZombie.setImageResource(R.drawable.icono_app);
-             moveZombie();
-         }),500);
+             //imgZombie.setImageResource(R.drawable.icono_app);
+            // moveZombie();
+         }),delayZombie);*/
 
     }
-
     private void sizeDisplay(){ // pantalla
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -100,9 +109,24 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         heightDisplay = point.y;
         widthDisplay = point.x;
         random = new Random();
-
     }
+    private void  cuentaAtras(){
 
+        new CountDownTimer(10000, 1000){
+
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long segundosRestantes =   millisUntilFinished/1000;
+                txtTiempo.setText(segundosRestantes +" s");
+            }
+
+            @Override
+            public void onFinish() {
+                txtTiempo.setText("0s");
+            }
+        }.start();
+    }
     private void moveZombie(){// movimiento
 
         int min = 0;
@@ -115,6 +139,32 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
 
         imgZombie.setX(randomX);
         imgZombie.setY(randomY);
+    }
+    private void starPlay(){
+
+        MovimientoZombie movi = new MovimientoZombie();
+        movi.start();
+    }
+
+    class MovimientoZombie extends Thread{
+
+        public MovimientoZombie(){
+        }
+
+        @Override
+        public void run() {
+
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    imgZombie.setImageResource(R.drawable.icono_app);
+                    moveZombie();
+                }
+
+            }, 1000, 1000);
+
+        }
     }
 
 }
