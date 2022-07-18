@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.example.juegozombie.commons.Disegno;
 import com.example.juegozombie.entities.Jugador;
 
+import java.util.Random;
+
 public class EscenarioJuego extends AppCompatActivity implements View.OnClickListener {
 
     private Jugador currentPlayer;
@@ -25,6 +27,7 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
 
     private ImageView imgZombie;
 
+    private Random random; // aleatorio
     private int widthDisplay; // anchoPantalla
     private int heightDisplay; // altoPantalla
     private  int contador;
@@ -82,7 +85,9 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
          imgZombie.setImageResource(R.drawable.zombie_muerto);
 
          new Handler().postDelayed((  ()-> {
+             
              imgZombie.setImageResource(R.drawable.icono_app);
+             moveZombie();
          }),500);
 
     }
@@ -94,6 +99,22 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         display.getSize(point);
         heightDisplay = point.y;
         widthDisplay = point.x;
-        
+        random = new Random();
+
     }
+
+    private void moveZombie(){// movimiento
+
+        int min = 0;
+
+        int maxX = widthDisplay - imgZombie.getWidth();
+        int maxY = widthDisplay - imgZombie.getHeight();
+
+        int randomX = random.nextInt(    ((maxX - min) + 1) + min );
+        int randomY = random.nextInt(    ((maxY - min) + 1) + min );
+
+        imgZombie.setX(randomX);
+        imgZombie.setY(randomY);
+    }
+
 }
