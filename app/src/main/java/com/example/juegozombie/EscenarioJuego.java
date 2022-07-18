@@ -2,6 +2,7 @@ package com.example.juegozombie;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
@@ -40,7 +42,11 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
     private  int contador;
     private  final int  delayZombie = 400;
 
+    private boolean gameOver;
+    private Dialog mensajeFinPartida; // miDialog
     private Button btnPlay;
+
+    private MovimientoZombie movimientoZombie;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +71,9 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         imgZombie = findViewById(R.id.imgJuego);
         btnPlay= findViewById(R.id.btnPlay);
         lottieAnimacion= findViewById(R.id.lottieMovimiento);
+
+        mensajeFinPartida = new Dialog(EscenarioJuego.this);
+        lottieAnimacion.setRepeatCount(LottieDrawable.INFINITE);
     }
 
     private void setTypeFont(){
@@ -90,7 +99,7 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         int id = view.getId();
 
-        if (id == imgZombie.getId()) killerZombie();
+        if (id == imgZombie.getId() && !gameOver)killerZombie();
         else if (id == btnPlay.getId()) iniciarJuego();
     }
     private void killerZombie(){
@@ -112,13 +121,14 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
     private void iniciarJuego(){
         starPlay();
         cuentaAtras();
-        starAnimationLottie();
     }
-
-    private void starAnimationLottie(){
-        lottieAnimacion.setRepeatCount(LottieDrawable.INFINITE);
-        lottieAnimacion.playAnimation();
+    // mensajeGameOver
+    private void finJuego(){
+        gameOver = true;
+        lottieAnimacion.cancelAnimation();
+        movimientoZombie.interrupt();
     }
+    
     private void sizeDisplay(){ // pantalla
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -141,6 +151,8 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onFinish() {
                 txtTiempo.setText("0s");
+                finJuego();
+
             }
         }.start();
     }
@@ -159,8 +171,14 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
     }
     private void starPlay(){
 
-        MovimientoZombie movi = new MovimientoZombie();
-        movi.start();
+        lottieAnimacion.playAnimation();
+
+        movimientoZombie = new MovimientoZombie();
+
+        movimientoZombie.start();
+
+        gameOver = false;
+
     }
 
     class MovimientoZombie extends Thread{
@@ -176,7 +194,8 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void run() {
                     imgZombie.setImageResource(R.drawable.icono_app);
-                    moveZombie();
+                    if (!gameOver) moveZombie();
+                    else timer.cancel();
                 }
 
             }, 1000, 1000);
