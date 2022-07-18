@@ -4,13 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.juegozombie.commons.Disegno;
 import com.example.juegozombie.entities.Jugador;
 
-public class EscenarioJuego extends AppCompatActivity {
+public class EscenarioJuego extends AppCompatActivity implements View.OnClickListener {
 
     private Jugador currentPlayer;
     private TextView txtContador;
@@ -20,6 +22,7 @@ public class EscenarioJuego extends AppCompatActivity {
 
     private ImageView imgZombie;
 
+    private  int contador;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,7 @@ public class EscenarioJuego extends AppCompatActivity {
     private  void initApp(){
         findByWidget();
         setTypeFont();
+        setListenerClick();
         getDataPlayer();
     }
     private void findByWidget() {
@@ -46,10 +50,11 @@ public class EscenarioJuego extends AppCompatActivity {
         txtContador.setTypeface(typeface);
         txtTiempo.setTypeface(typeface);
     }
+    private void setListenerClick(){
+        imgZombie.setOnClickListener(this);
+    }
 
     private void  getDataPlayer(){
-
-
         Bundle bundle = getIntent().getExtras();
          currentPlayer = (Jugador) bundle.get("jugadorActual");
         txtNombre.setText(currentPlayer.getNombres());
@@ -57,4 +62,22 @@ public class EscenarioJuego extends AppCompatActivity {
         txtContador.setText(""+ currentPlayer.getPuntaje());
     }
 
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+
+        if (id == imgZombie.getId()) killerZombie();
+    }
+
+    private void killerZombie(){
+        contador ++;
+        txtContador.setText(String.valueOf(contador));
+
+         imgZombie.setImageResource(R.drawable.zombie_muerto);
+
+         new Handler().postDelayed((  ()-> {
+             imgZombie.setImageResource(R.drawable.icono_app);
+         }),500);
+
+    }
 }
