@@ -33,6 +33,7 @@
     <string name="btnPuntuMenu">PUNTUACIONES</string>
     <string name="btnAcercaMenu">ACERCA DE</string>
     <string name="btnSalirMenu">SALIR</string>
+    <string name="play">play</string>
 
 
 </resources>

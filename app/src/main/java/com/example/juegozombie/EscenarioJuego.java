@@ -11,9 +11,12 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.example.juegozombie.commons.Disegno;
 import com.example.juegozombie.entities.Jugador;
 
@@ -28,7 +31,7 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
     private TextView txtUid;
     private TextView txtNombre;
     private TextView txtTiempo;
-
+    private LottieAnimationView lottieAnimacion;
     private ImageView imgZombie;
 
     private Random random; // aleatorio
@@ -36,6 +39,8 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
     private int heightDisplay; // altoPantalla
     private  int contador;
     private  final int  delayZombie = 400;
+
+    private Button btnPlay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +54,8 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         setListenerClick();
         getDataPlayer();
         sizeDisplay();
-        starPlay();
-        cuentaAtras();
+        //starPlay();
+        //cuentaAtras();
     }
     private void findByWidget() {
 
@@ -58,6 +63,8 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         txtNombre = findViewById(R.id.txtNombreEs);
         txtTiempo= findViewById(R.id.txtTiempoEsc);
         imgZombie = findViewById(R.id.imgJuego);
+        btnPlay= findViewById(R.id.btnPlay);
+        lottieAnimacion= findViewById(R.id.lottieMovimiento);
     }
 
     private void setTypeFont(){
@@ -68,6 +75,7 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
     }
     private void setListenerClick(){
         imgZombie.setOnClickListener(this);
+        btnPlay.setOnClickListener(this);
     }
 
     private void  getDataPlayer(){
@@ -83,8 +91,8 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         int id = view.getId();
 
         if (id == imgZombie.getId()) killerZombie();
+        else if (id == btnPlay.getId()) iniciarJuego();
     }
-
     private void killerZombie(){
         contador ++;
         txtContador.setText(String.valueOf(contador));
@@ -95,11 +103,21 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         v.vibrate(300);
 
         /* new Handler().postDelayed((  ()-> {
-             
+
              //imgZombie.setImageResource(R.drawable.icono_app);
             // moveZombie();
          }),delayZombie);*/
 
+    }
+    private void iniciarJuego(){
+        starPlay();
+        cuentaAtras();
+        starAnimationLottie();
+    }
+
+    private void starAnimationLottie(){
+        lottieAnimacion.setRepeatCount(LottieDrawable.INFINITE);
+        lottieAnimacion.playAnimation();
     }
     private void sizeDisplay(){ // pantalla
 
@@ -113,7 +131,6 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
     private void  cuentaAtras(){
 
         new CountDownTimer(10000, 1000){
-
 
             @Override
             public void onTick(long millisUntilFinished) {
