@@ -2,9 +2,12 @@ package com.example.juegozombie;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +25,8 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
 
     private ImageView imgZombie;
 
+    private int widthDisplay; // anchoPantalla
+    private int heightDisplay; // altoPantalla
     private  int contador;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         setTypeFont();
         setListenerClick();
         getDataPlayer();
+        sizeDisplay();
     }
     private void findByWidget() {
 
@@ -79,5 +85,15 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
              imgZombie.setImageResource(R.drawable.icono_app);
          }),500);
 
+    }
+
+    private void sizeDisplay(){ // pantalla
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        heightDisplay = point.y;
+        widthDisplay = point.x;
+        
     }
 }
