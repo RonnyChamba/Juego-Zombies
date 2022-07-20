@@ -55,35 +55,37 @@
         app:lottie_fileName="finjuego.json"
         app:lottie_imageAssetsFolder="assets"
         app:lottie_loop="true"/>
-    <Button
-        android:id="@+id/jugarDeNuevo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/jugarDeNuevo"
-        android:layout_marginTop="15dp"
-        android:textSize="@dimen/btnFontSize"
-        app:backgroundTint ="@null"
-        android:background="@drawable/boton_personalizado"/>
+        <Button
+            android:id="@+id/jugarDeNuevo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/jugarDeNuevo"
+            android:layout_marginTop="15dp"
+            android:textSize="@dimen/btnFontSize"
+            app:backgroundTint ="@null"
+            android:layout_gravity="center"
+            android:background="@drawable/boton_personalizado"/>
 
-    <Button
-        android:id="@+id/irMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/irMenu"
-        android:layout_marginTop="15dp"
-        android:textSize="@dimen/btnFontSize"
-        app:backgroundTint ="@null"
-        android:background="@drawable/boton_personalizado"/>
+        <Button
+            android:id="@+id/irMenu"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="@string/irMenu"
+            android:layout_marginTop="15dp"
+            android:textSize="@dimen/btnFontSize"
+            app:backgroundTint ="@null"
+            android:background="@drawable/boton_personalizado"/>
 
-    <Button
-        android:id="@+id/puntajes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/puntajes"
-        android:layout_marginTop="15dp"
-        android:textSize="@dimen/btnFontSize"
-        app:backgroundTint ="@null"
-        android:background="@drawable/boton_personalizado"/>
-
+        <Button
+            android:id="@+id/puntajes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/puntajes"
+            android:layout_marginTop="15dp"
+            android:textSize="@dimen/btnFontSize"
+            android:layout_gravity="center"
+            app:backgroundTint ="@null"
+            android:background="@drawable/boton_personalizado"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
