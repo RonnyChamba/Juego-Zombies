@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">JuegoZombie</string>
 
-    <dimen name="sizeTitle">25dp</dimen>
+    <dimen name="sizeTitle">25sp</dimen>
 
     <!-- Main Activity-->
     <string name="btnLogin">Login</string>
@@ -34,6 +34,14 @@
     <string name="btnAcercaMenu">ACERCA DE</string>
     <string name="btnSalirMenu">SALIR</string>
     <string name="play">play</string>
+
+    <!-- GAMEOVER-->
+    <string name="seacaboTxt">¡Se acabó el tiempo!</string>
+    <string name="hasMatadoTxt">Has Matado</string>
+    <string name="numeroTxt">--</string>
+    <string name="jugarDeNuevo">JUGAR DE NUEVO</string>
+    <string name="irMenu">MENU</string>
+    <string name="puntajes">VER PUNTAJES</string>
 
 
 </resources>

@@ -1,7 +1,9 @@
 package com.example.juegozombie;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Point;
 import android.graphics.Typeface;
@@ -60,6 +62,7 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         setListenerClick();
         getDataPlayer();
         sizeDisplay();
+        mensajeFinPartida = new Dialog(EscenarioJuego.this);
         //starPlay();
         //cuentaAtras();
     }
@@ -76,7 +79,7 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         lottieAnimacion.setRepeatCount(LottieDrawable.INFINITE);
     }
 
-    private void setTypeFont(){
+    private void  setTypeFont(){
         Typeface typeface = Disegno.getTypeFace(this);
         txtNombre.setTypeface(typeface);
         txtContador.setTypeface(typeface);
@@ -110,13 +113,6 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
 
         Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         v.vibrate(300);
-
-        /* new Handler().postDelayed((  ()-> {
-
-             //imgZombie.setImageResource(R.drawable.icono_app);
-            // moveZombie();
-         }),delayZombie);*/
-
     }
     private void iniciarJuego(){
         starPlay();
@@ -127,8 +123,49 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         gameOver = true;
         lottieAnimacion.cancelAnimation();
         movimientoZombie.interrupt();
+        mensajeGameOver();
     }
-    
+
+    private void mensajeGameOver() {
+
+        Typeface typeface = Disegno.getTypeFace(this);
+
+        TextView seAcaboTxt, hasMatadoTxt, numeroTxt;
+        Button jugarDeNuevo, irMenu, puntajes;
+
+        mensajeFinPartida.setContentView(R.layout.gameover);
+        mensajeFinPartida.setCancelable(false);
+
+        seAcaboTxt = mensajeFinPartida.findViewById(R.id.seacaboTxt);
+        hasMatadoTxt = mensajeFinPartida.findViewById(R.id.hasMatadoTxt);
+        numeroTxt = mensajeFinPartida.findViewById(R.id.numeroTxt);
+
+        jugarDeNuevo = mensajeFinPartida.findViewById(R.id.jugarDeNuevo);
+        irMenu = mensajeFinPartida.findViewById(R.id.irMenu);
+        puntajes = mensajeFinPartida.findViewById(R.id.puntajes);
+
+        String zombies = String.valueOf(contador);
+        numeroTxt.setText(zombies);
+
+
+        seAcaboTxt.setTypeface(typeface);
+        hasMatadoTxt.setTypeface(typeface);
+        numeroTxt.setTypeface(typeface);
+
+        jugarDeNuevo.setTypeface(typeface);
+        irMenu.setTypeface(typeface);
+        puntajes.setTypeface(typeface);
+
+        mensajeFinPartida.show();
+
+    }
+    private void fontGameOver(){
+
+
+
+
+    }
+
     private void sizeDisplay(){ // pantalla
 
         Display display = getWindowManager().getDefaultDisplay();
