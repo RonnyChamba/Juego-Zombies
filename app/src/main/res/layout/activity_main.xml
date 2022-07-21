@@ -4,33 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    android:background="@color/color_fondo"
     android:padding="10dp"
-    android:background="@color/color_fondo">
+    tools:context=".MainActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageGif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true" />
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:textSize="@dimen/btnFontSize"
             android:background="@drawable/boton_personalizado"
-            app:backgroundTint ="@null"
-            android:text="@string/btnLogin" />
+            android:text="@string/btnLogin"
+            android:textColor="@color/color_fondo"
+            android:textSize="@dimen/btnFontSize"
+            app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/btnRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/boton_personalizado"
-            app:backgroundTint ="@null"
-            android:textSize="@dimen/btnFontSize"
             android:text="@string/btnRegistro"
-            />
+            android:textColor="@color/color_fondo"
+            android:textSize="@dimen/btnFontSize"
+            app:backgroundTint="@null" />
     </LinearLayout>
 </RelativeLayout>

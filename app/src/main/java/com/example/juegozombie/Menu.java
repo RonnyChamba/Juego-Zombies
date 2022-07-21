@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.juegozombie.commons.Constantes;
 import com.example.juegozombie.commons.Disegno;
 import com.example.juegozombie.entities.Jugador;
@@ -47,6 +50,7 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
     private TextView txtCorreoJugaMenu;
     private TextView txtNombreJugaMenu;
     private Jugador currentPlayer;
+    private ImageView imagen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,7 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         setListenerClick();
         setTypeFont();
         initFirebase();
+        onloadGif();
     }
 
     private void initFirebase(){
@@ -91,6 +96,8 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         btnPuntuacion = findViewById(R.id.btnPuntaciones);
         btnAcercaDe = findViewById(R.id.btnHacerca);
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
+
+        imagen = findViewById(R.id.imageGif);
     }
     private void setListenerClick() {
         btnPuntuacion.setOnClickListener(this);
@@ -112,6 +119,14 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
 
     }
 
+    private void onloadGif(){
+
+        //String url = "https://c.tenor.com/FkC4OX_XzowAAAAC/calabaza-pumpkin.gif";
+        String url = "https://i.pinimg.com/originals/35/37/56/3537568867d0b27733c47299f1f2e999.gif";
+        Uri urlParse = Uri.parse(url);
+        Glide.with(getApplicationContext()).load(urlParse).into(imagen);
+
+    }
     private void usuarioLogeado() {
 
         if (user != null) {

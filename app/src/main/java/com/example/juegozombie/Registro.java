@@ -86,6 +86,9 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
     private void setTypeFont(){
         Typeface typeface = Disegno.getTypeFace(this);
         txtTitle.setTypeface(typeface);
+        txtEmail.setTypeface(typeface);
+        txtPassword.setTypeface(typeface);
+        txtNombre.setTypeface(typeface);
         btnRegistrar.setTypeface(typeface);
 
     }

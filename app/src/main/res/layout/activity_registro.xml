@@ -16,7 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -24,7 +24,7 @@
                 android:id="@+id/txtTitleRegistro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
+                android:layout_marginBottom="20dp"
                 android:text="@string/txtTitleRegistro"
                 android:textAlignment="center"
                 android:textColor="@color/color_botones"
@@ -49,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:hint="@string/txtEmail"
+                android:textColor="@color/color_fondo"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:hint="@string/txtPassword"
+                android:textColor="@color/color_fondo"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,6 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:textColor="@color/color_fondo"
                 android:hint="@string/txtNombre" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,7 +93,8 @@
             android:layout_marginBottom="@dimen/mg_tb"
             android:text="@string/txtFecha"
             android:textAlignment="center"
-            android:textSize="16dp"
+            android:textSize="18dp"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <Button
@@ -101,6 +105,8 @@
             android:background="@drawable/boton_personalizado"
             app:backgroundTint ="@null"
             android:textSize="@dimen/btnFontSize"
+            android:textStyle="bold"
+            android:textColor="@color/color_fondo"
             android:text="@string/btnRegistrar" />
     </LinearLayout>
 

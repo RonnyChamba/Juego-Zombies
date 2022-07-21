@@ -57,6 +57,8 @@ public class Login extends AppCompatActivity  implements View.OnClickListener {
     private void setTypeFont(){
         Typeface typeface = Disegno.getTypeFace(this);
         txtTitle.setTypeface(typeface);
+        txtEmailLogin.setTypeface(typeface);
+        txtPassLogin.setTypeface(typeface);
         btnLogin.setTypeface(typeface);
     }
 

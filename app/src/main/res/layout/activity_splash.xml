@@ -6,12 +6,22 @@
     android:layout_height="match_parent"
     android:background="#F44336"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".splash">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:srcCompat="@drawable/icono_app" />
+        app:srcCompat="@drawable/icono_app"
+        android:layout_marginBottom="20dp"/>
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/sizeTitle"
+        android:textColor="@color/white"
+        android:text="MATA CALABAZAS"/>
 </LinearLayout>
