@@ -2,6 +2,8 @@ package com.example.juegozombie;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -25,7 +27,10 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.bumptech.glide.Glide;
 import com.example.juegozombie.commons.Disegno;
+import com.example.juegozombie.dialog.DialogFragment;
 import com.example.juegozombie.entities.Jugador;
+
+import org.w3c.dom.Text;
 
 import java.util.Random;
 import java.util.Timer;
@@ -132,7 +137,25 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         gameOver = true;
         lottieAnimacion.cancelAnimation();
         movimientoZombie.interrupt();
-        mensajeGameOver();
+       // mensajeGameOver();
+        dialogSms();
+    }
+    private void dialogSms(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        DialogFragment  dialog = new DialogFragment(String.valueOf(contador));
+
+        dialog.setCancelable(false);
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // For a little polish, specify a transition animation
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        // To make it fullscreen, use the 'content' root view as the container
+        // for the fragment, which is always the root view for the activity
+        transaction.add(android.R.id.content, dialog)
+                .addToBackStack(null).commit();
+
+
     }
 
     private void mensajeGameOver() {
@@ -165,7 +188,6 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         irMenu.setTypeface(typeface);
         puntajes.setTypeface(typeface);
 
-        mensajeFinPartida.show();
 
     }
     private void onloadGif(){
