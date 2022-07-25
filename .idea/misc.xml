@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ProyectAndroid/Juego-Zombies/app/src/main/res/drawable/boton_personalizado.xml" value="0.2005" />
+        <entry key="..\:/ProyectAndroid/Juego-Zombies/app/src/main/res/drawable/campos_personalizado.xml" value="0.1905" />
+        <entry key="..\:/ProyectAndroid/Juego-Zombies/app/src/main/res/layout/activity_main.xml" value="0.2015625" />
+        <entry key="..\:/ProyectAndroid/Juego-Zombies/app/src/main/res/layout/activity_menu.xml" value="0.2015625" />
         <entry key="..\:/ProyectAndroid/Juego-Zombies/app/src/main/res/layout/activity_registro.xml" value="0.33" />
         <entry key="..\:/ProyectAndroid/Juego-Zombies/app/src/main/res/layout/gameover.xml" value="0.2015625" />
+        <entry key="..\:/ProyectAndroid/Juego-Zombies/app/src/main/res/menu/menu.xml" value="0.33" />
         <entry key="..\:/ProyectosAndroid/Juego-Zombies/app/src/main/res/drawable/boton_personalizado.xml" value="0.1555" />
         <entry key="..\:/ProyectosAndroid/Juego-Zombies/app/src/main/res/layout/activity_escenario_juego.xml" value="0.20416666666666666" />
         <entry key="..\:/ProyectosAndroid/Juego-Zombies/app/src/main/res/layout/activity_login.xml" value="0.33" />

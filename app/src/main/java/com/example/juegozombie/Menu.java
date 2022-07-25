@@ -27,8 +27,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Menu extends AppCompatActivity  implements View.OnClickListener {
 
@@ -41,9 +44,15 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
     private Button btnPuntuacion;
     private Button btnAcercaDe;
     private Button btnCerrarSesion;
+    private Button btnEditar;
+    private Button btnCambiasPass;
 
 
     private TextView txtTitleMenu;
+    private TextView txtPerfilMenu;
+    private TextView txtFechaMenu;
+    private TextView txtEdadMenu;
+    private TextView txtPaisMenu;
     private TextView txtZombieMenu;
     private TextView txtUidMenu;
     private TextView txtSubTitleMenu;
@@ -51,6 +60,7 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
     private TextView txtNombreJugaMenu;
     private Jugador currentPlayer;
     private ImageView imagen;
+    private CircleImageView imgPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,17 +96,23 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
     private void findByWidget() {
 
         txtTitleMenu = findViewById(R.id.txtTitleMenu);
+        txtPerfilMenu = findViewById(R.id.txtTitlePerfil);
+        txtEdadMenu = findViewById(R.id.txtEdadMenu);
+        txtPaisMenu = findViewById(R.id.txtPaisMenu);
+        txtFechaMenu = findViewById(R.id.txtFechaMenu);
         txtUidMenu = findViewById(R.id.txtUidMenu);
         txtZombieMenu = findViewById(R.id.txtZombiesMenu);
         txtSubTitleMenu = findViewById(R.id.txtSubTitleMenu);
         txtCorreoJugaMenu = findViewById(R.id.txtCorreoJugadorMenu);
         txtNombreJugaMenu = findViewById(R.id.txtNombreJugadorMenu);
+        imgPerfil = findViewById(R.id.imgPerfil);
 
         btnJugar = findViewById(R.id.btnJugar);
         btnPuntuacion = findViewById(R.id.btnPuntaciones);
         btnAcercaDe = findViewById(R.id.btnHacerca);
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
-
+        btnEditar = findViewById(R.id.btnEditar);
+        btnCambiasPass = findViewById(R.id.btnCambiarPass);
         imagen = findViewById(R.id.imageGif);
     }
     private void setListenerClick() {
@@ -104,18 +120,31 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         btnAcercaDe.setOnClickListener(this);
         btnJugar.setOnClickListener(this);
         btnCerrarSesion.setOnClickListener(this);
+        btnEditar.setOnClickListener(this);
+        btnCambiasPass.setOnClickListener(this);
     }
     private void setTypeFont(){
 
         Typeface typeface = Disegno.getTypeFace(this);
+
         txtTitleMenu.setTypeface(typeface);
+        txtPerfilMenu.setTypeface(typeface);
+        txtEdadMenu.setTypeface(typeface);
+        txtFechaMenu.setTypeface(typeface);
+        txtPaisMenu.setTypeface(typeface);
         txtSubTitleMenu.setTypeface(typeface);
         txtCorreoJugaMenu.setTypeface(typeface);
         txtNombreJugaMenu.setTypeface(typeface);
+        txtZombieMenu.setTypeface(typeface);
         btnJugar.setTypeface(typeface);
         btnPuntuacion.setTypeface(typeface);
         btnAcercaDe.setTypeface(typeface);
         btnCerrarSesion.setTypeface(typeface);
+        btnEditar.setTypeface(typeface);
+        btnCambiasPass.setTypeface(typeface);
+
+
+
 
     }
 
@@ -128,6 +157,8 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
 
     }
     private void usuarioLogeado() {
+
+      //  auth.signOut();
 
         if (user != null) {
             consulta();
@@ -174,15 +205,26 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
                 currentPlayer = new Jugador();
 
                 currentPlayer.setuId(ds.child("Uid").getValue().toString());
+                currentPlayer.setEdad( Integer.parseInt(ds.child("Edad").getValue().toString()));
+                currentPlayer.setPais( ds.child("Pais").getValue().toString());
+                currentPlayer.setFecha( ds.child("Fecha").getValue().toString());
                 currentPlayer.setPuntaje( Integer.parseInt(ds.child("Zombies").getValue().toString()));
                 currentPlayer.setNombres(ds.child("Nombres").getValue().toString());
                 currentPlayer.setEmail(ds.child("Email").getValue().toString());
+                currentPlayer.setImagen(ds.child("Imagen").getValue().toString());
 
                 txtUidMenu.setText(currentPlayer.getuId());
                 // Obliatorio convertir en String
                 txtZombieMenu.setText(""+currentPlayer.getPuntaje());
                 txtCorreoJugaMenu.setText(currentPlayer.getEmail());
                 txtNombreJugaMenu.setText(currentPlayer.getNombres());
+                txtEdadMenu.setText(currentPlayer.getEdad() +"");
+                txtPaisMenu.setText(currentPlayer.getPais());
+                txtFechaMenu.setText(currentPlayer.getFecha());
+
+                if (!currentPlayer.getImagen().equals("")){
+                    Picasso.get().load(currentPlayer.getImagen()).into(imgPerfil);
+                }else Picasso.get().load(R.drawable.calabaza_login).into(imgPerfil);
 
             }
 

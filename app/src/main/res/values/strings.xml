@@ -39,13 +39,21 @@
 
     <!-- Activity Menu-->
     <string name="txtTitleMenu">MI PUNTUACION</string>
+    <string name="txtTitlePerfil">MI PERFIL</string>
     <string name="txtSubTitleMenu">MENU</string>
 
     <string name="btnJugarMenu">JUGAR</string>
     <string name="btnPuntuMenu">PUNTUACIONES</string>
+    <string name="btnEditar">EDITAR</string>
+    <string name="btnCambiarPass">CAMBIAR CONTRASEÑA</string>
     <string name="btnAcercaMenu">ACERCA DE</string>
     <string name="btnSalirMenu">SALIR</string>
     <string name="play">play</string>
+
+    <string name="itemPerfil">Ver Perfil</string>
+    <string name="itemAcerca">Acerca de</string>
+    <string name="itemCerrarSesion">Cerrar Sesion</string>
+
 
     <!-- GAMEOVER-->
     <string name="seacaboTxt">¡Se acabo el tiempo!</string>

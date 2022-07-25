@@ -9,6 +9,10 @@ public class Jugador  implements Serializable {
     private  String nombres;
     private  String password;
     private int puntaje;
+    private int edad;
+    private String fecha;
+    private String pais;
+    private  String imagen;
 
     public Jugador(String uId, String email, String nombres, String password, int puntaje) {
         this.uId = uId;
@@ -58,6 +62,38 @@ public class Jugador  implements Serializable {
 
     public void setPuntaje(int puntaje) {
         this.puntaje = puntaje;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     @Override
