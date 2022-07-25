@@ -1,37 +1,37 @@
 package com.example.juegozombie;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentOnAttachListener;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
-import com.bumptech.glide.Glide;
+import com.example.juegozombie.commons.Constantes;
 import com.example.juegozombie.commons.Disegno;
 import com.example.juegozombie.dialog.DialogFragment;
 import com.example.juegozombie.entities.Jugador;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,11 +53,15 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
     private  final int  delayZombie = 400;
 
     private boolean gameOver;
-    private Dialog mensajeFinPartida; // miDialog
     private Button btnPlay;
     private ImageView imagen;
 
     private MovimientoZombie movimientoZombie;
+    private FirebaseAuth auth;
+    private FirebaseDatabase dataBase;
+    private DatabaseReference dbReference;
+    private FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,15 +71,11 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
 
     private  void initApp(){
         findByWidget();
+        initFirebase();
         setTypeFont();
         setListenerClick();
         getDataPlayer();
         sizeDisplay();
-        mensajeFinPartida = new Dialog(EscenarioJuego.this);
-        //onloadGif();
-
-        //starPlay();
-        //cuentaAtras();
     }
     private void findByWidget() {
 
@@ -85,11 +85,15 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         imgZombie = findViewById(R.id.imgJuego);
         btnPlay= findViewById(R.id.btnPlay);
         lottieAnimacion= findViewById(R.id.lottieMovimiento);
-
-        mensajeFinPartida = new Dialog(EscenarioJuego.this);
         lottieAnimacion.setRepeatCount(LottieDrawable.INFINITE);
 
         imagen = findViewById(R.id.imageGif);
+    }
+    private void  initFirebase(){
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        dataBase = FirebaseDatabase.getInstance();
+        dbReference = dataBase.getReference(Constantes.NAME_BD);
     }
 
     private void  setTypeFont(){
@@ -137,14 +141,15 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         gameOver = true;
         lottieAnimacion.cancelAnimation();
         movimientoZombie.interrupt();
-       // mensajeGameOver();
+        updateDataPlayer();
         dialogSms();
+        // tiene que ir despues de DialogSms()
+        contador =0;
+        txtContador.setText("0");
     }
     private void dialogSms(){
         FragmentManager fragmentManager = getSupportFragmentManager();
-
         DialogFragment  dialog = new DialogFragment(String.valueOf(contador));
-
         dialog.setCancelable(false);
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -158,45 +163,6 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    private void mensajeGameOver() {
-
-        Typeface typeface = Disegno.getTypeFace(this);
-
-        TextView seAcaboTxt, hasMatadoTxt, numeroTxt;
-        Button jugarDeNuevo, irMenu, puntajes;
-
-        mensajeFinPartida.setContentView(R.layout.gameover);
-        mensajeFinPartida.setCancelable(false);
-
-        seAcaboTxt = mensajeFinPartida.findViewById(R.id.seacaboTxt);
-        hasMatadoTxt = mensajeFinPartida.findViewById(R.id.hasMatadoTxt);
-        numeroTxt = mensajeFinPartida.findViewById(R.id.numeroTxt);
-
-        jugarDeNuevo = mensajeFinPartida.findViewById(R.id.jugarDeNuevo);
-        irMenu = mensajeFinPartida.findViewById(R.id.irMenu);
-        puntajes = mensajeFinPartida.findViewById(R.id.puntajes);
-
-        String zombies = String.valueOf(contador);
-        numeroTxt.setText(zombies);
-
-
-        seAcaboTxt.setTypeface(typeface);
-        hasMatadoTxt.setTypeface(typeface);
-        numeroTxt.setTypeface(typeface);
-
-        jugarDeNuevo.setTypeface(typeface);
-        irMenu.setTypeface(typeface);
-        puntajes.setTypeface(typeface);
-
-
-    }
-    private void onloadGif(){
-
-        //String url = "https://c.tenor.com/FkC4OX_XzowAAAAC/calabaza-pumpkin.gif";
-        String url = "https://i.pinimg.com/originals/35/37/56/3537568867d0b27733c47299f1f2e999.gif";
-        Uri urlParse = Uri.parse(url);
-        Glide.with(getApplicationContext()).load(urlParse).into(imagen);
-    }
     private void sizeDisplay(){ // pantalla
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -246,6 +212,16 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         movimientoZombie.start();
 
         gameOver = false;
+
+    }
+
+    private  void updateDataPlayer(){
+
+        Map<String, Object> data =  new HashMap<>();
+        data.put("Zombies", contador);
+        dbReference.child(user.getUid()).updateChildren(data).addOnCompleteListener( (task) ->{
+            Toast.makeText(this, "El puntaje ha sido actualizado correctamente", Toast.LENGTH_SHORT).show();
+        });
 
     }
 
