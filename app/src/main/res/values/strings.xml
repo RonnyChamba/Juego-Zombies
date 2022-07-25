@@ -10,10 +10,22 @@
     <!-- Nuevo Jugador -->
     <string name="txtTitleRegistro">Nuevo Jugador</string>
     <string name="txtNombre">Nombre</string>
+    <string name="txtEdad">Edad</string>
+    <string name="txtPais">Pais</string>
     <string name="txtEmail">Email</string>
     <string name="txtPassword">Contraseña</string>
     <string name="btnRegistrar">Registrar</string>
     <string name="txtFecha">Fecha</string>
+    <string-array name="lisPaises">
+
+
+        <item >Ecuador</item>
+        <item >Colombia</item>
+        <item >Peru</item>
+        <item >Venezuela</item>
+        <item >Argentina</item>
+    </string-array>
+
 
     <dimen name="mg_tb">10dp</dimen>
     <dimen name="btnFontSize">18dp</dimen>
