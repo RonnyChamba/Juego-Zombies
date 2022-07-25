@@ -1,16 +1,22 @@
 package com.example.juegozombie;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.juegozombie.commons.Constantes;
 import com.example.juegozombie.commons.Disegno;
 import com.example.juegozombie.entities.Jugador;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,11 +36,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Menu extends AppCompatActivity  implements View.OnClickListener {
+public class Menu extends AppCompatActivity implements View.OnClickListener {
 
 
     private FirebaseAuth auth;
@@ -84,7 +93,7 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         onloadGif();
     }
 
-    private void initFirebase(){
+    private void initFirebase() {
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -115,6 +124,7 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         btnCambiasPass = findViewById(R.id.btnCambiarPass);
         imagen = findViewById(R.id.imageGif);
     }
+
     private void setListenerClick() {
         btnPuntuacion.setOnClickListener(this);
         btnAcercaDe.setOnClickListener(this);
@@ -123,7 +133,8 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         btnEditar.setOnClickListener(this);
         btnCambiasPass.setOnClickListener(this);
     }
-    private void setTypeFont(){
+
+    private void setTypeFont() {
 
         Typeface typeface = Disegno.getTypeFace(this);
 
@@ -144,11 +155,9 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         btnCambiasPass.setTypeface(typeface);
 
 
-
-
     }
 
-    private void onloadGif(){
+    private void onloadGif() {
 
         //String url = "https://c.tenor.com/FkC4OX_XzowAAAAC/calabaza-pumpkin.gif";
         String url = "https://i.pinimg.com/originals/35/37/56/3537568867d0b27733c47299f1f2e999.gif";
@@ -156,9 +165,10 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         Glide.with(getApplicationContext()).load(urlParse).into(imagen);
 
     }
+
     private void usuarioLogeado() {
 
-      //  auth.signOut();
+        //  auth.signOut();
 
         if (user != null) {
             consulta();
@@ -174,25 +184,144 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
     public void onClick(View view) {
 
         int id = view.getId();
-         if (id == btnJugar.getId()){
-             jugar();
+        if (id == btnJugar.getId()) {
+            jugar();
 
-        }else if (id == btnPuntuacion.getId()){
+        } else if (id == btnPuntuacion.getId()) {
 
-         }else if (id == btnAcercaDe.getId()){
-         }
-         else if (id == btnCerrarSesion.getId()){
-             cerrarSesion();
-         }
+        } else if (id == btnAcercaDe.getId()) {
+        } else if (id == btnCerrarSesion.getId()) {
+            cerrarSesion();
+        } else if (id == btnEditar.getId()) {
+            editarDatos();
+        }
     }
-    private void cerrarSesion(){
+
+    private void editarDatos() {
+
+        String[] opciones = {"Foto Perfil", "Cambiar Edad", "Cambiar Pais"};
+
+        AlertDialog.Builder buider = new AlertDialog.Builder(this);
+        buider.setTitle("Editar Datos");
+        buider.setItems(opciones, (dialog, index) -> {
+
+
+            if (index == 0) {
+
+                actualizarFoto();
+            } else if (index == 1) {
+
+                actualizarEdad();
+            } else if (index == 2) {
+
+                actualizarPais();
+            }
+
+
+        }).create().show();
+
+
+    }
+
+    private void actualizarPais() {
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Actualizar Pais");
+
+        LinearLayout linearLayout =  new LinearLayout(this);
+
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setPadding(5, 5,5,5);
+
+
+        Spinner spinner = new Spinner(this);
+
+        String paises [] = {"Ecuador", "Colombia", "Peru", "Venezuela", "Argentina"};
+        spinner.setAdapter( new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, paises));
+        linearLayout.addView(spinner);
+        builder.setView(linearLayout);
+
+        builder.setPositiveButton("Actualizar", (di, index) ->{
+
+            String value =  spinner.getSelectedItem().toString();
+            Map<String, Object> mapa = new HashMap<>();
+            mapa.put("Pais", value);
+
+            databaseReference.child(user.getUid()).updateChildren(mapa)
+                    .addOnSuccessListener((unsed) -> {
+
+                        Toast.makeText(Menu.this, "Pais actualizado", Toast.LENGTH_SHORT).show();
+                    }).addOnFailureListener(  (exception) ->{
+
+                        Toast.makeText(Menu.this, "Error " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        });
+
+
+        builder.setNegativeButton("Cancelar", (di, index) ->{
+        });
+
+        builder.create().show();
+
+
+    }
+
+    private void actualizarEdad() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Actualizar Edad");
+
+        LinearLayout linearLayout =  new LinearLayout(this);
+
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setPadding(5, 5,5,5);
+
+        EditText editText = new EditText(this);
+        editText.setHint("Ingrese nueva edad");
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        linearLayout.addView(editText);
+        builder.setView(linearLayout);
+
+        builder.setPositiveButton("Actualizar", (di, index) ->{
+
+            String value = editText.getText().toString();
+
+            value =value.isEmpty() ? "0": value;
+
+            Map<String, Object> mapa = new HashMap<>();
+            mapa.put("Edad", value);
+
+            databaseReference.child(user.getUid()).updateChildren(mapa)
+                    .addOnSuccessListener((unsed) -> {
+
+                    Toast.makeText(Menu.this, "Edad actualizada", Toast.LENGTH_SHORT).show();
+                    }).addOnFailureListener(  (exception) ->{
+
+                        Toast.makeText(Menu.this, "Error " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        });
+
+
+        builder.setNegativeButton("Cancelar", (di, index) ->{
+        });
+
+        builder.create().show();
+
+
+    }
+
+    private void actualizarFoto() {
+    }
+
+    private void cerrarSesion() {
         auth.signOut();
         startActivity(new Intent(Menu.this, MainActivity.class));
         Toast.makeText(this, "Sesión cerrada exitosamente", Toast.LENGTH_SHORT).show();
 
     }
 
-    private void consulta (){
+    private void consulta() {
         Query query = databaseReference.orderByChild("Email").equalTo(user.getEmail());
 
         query.addValueEventListener(new ValueEventListener() {
@@ -205,26 +334,26 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
                 currentPlayer = new Jugador();
 
                 currentPlayer.setuId(ds.child("Uid").getValue().toString());
-                currentPlayer.setEdad( Integer.parseInt(ds.child("Edad").getValue().toString()));
-                currentPlayer.setPais( ds.child("Pais").getValue().toString());
-                currentPlayer.setFecha( ds.child("Fecha").getValue().toString());
-                currentPlayer.setPuntaje( Integer.parseInt(ds.child("Zombies").getValue().toString()));
+                currentPlayer.setEdad(ds.child("Edad").getValue().toString());
+                currentPlayer.setPais(ds.child("Pais").getValue().toString());
+                currentPlayer.setFecha(ds.child("Fecha").getValue().toString());
+                currentPlayer.setPuntaje(Integer.parseInt(ds.child("Zombies").getValue().toString()));
                 currentPlayer.setNombres(ds.child("Nombres").getValue().toString());
                 currentPlayer.setEmail(ds.child("Email").getValue().toString());
                 currentPlayer.setImagen(ds.child("Imagen").getValue().toString());
 
                 txtUidMenu.setText(currentPlayer.getuId());
                 // Obliatorio convertir en String
-                txtZombieMenu.setText(""+currentPlayer.getPuntaje());
+                txtZombieMenu.setText("" + currentPlayer.getPuntaje());
                 txtCorreoJugaMenu.setText(currentPlayer.getEmail());
                 txtNombreJugaMenu.setText(currentPlayer.getNombres());
-                txtEdadMenu.setText(currentPlayer.getEdad() +"");
+                txtEdadMenu.setText(currentPlayer.getEdad() + "");
                 txtPaisMenu.setText(currentPlayer.getPais());
                 txtFechaMenu.setText(currentPlayer.getFecha());
 
-                if (!currentPlayer.getImagen().equals("")){
+                if (!currentPlayer.getImagen().equals("")) {
                     Picasso.get().load(currentPlayer.getImagen()).into(imgPerfil);
-                }else Picasso.get().load(R.drawable.calabaza_login).into(imgPerfil);
+                } else Picasso.get().load(R.drawable.calabaza_login).into(imgPerfil);
 
             }
 
@@ -235,10 +364,10 @@ public class Menu extends AppCompatActivity  implements View.OnClickListener {
         });
     }
 
-    private void  jugar(){
+    private void jugar() {
 
         Intent intent = new Intent(this, EscenarioJuego.class);
-        intent.putExtra("jugadorActual",  currentPlayer);
+        intent.putExtra("jugadorActual", currentPlayer);
         startActivity(intent);
     }
 }

@@ -9,7 +9,7 @@ public class Jugador  implements Serializable {
     private  String nombres;
     private  String password;
     private int puntaje;
-    private int edad;
+    private String edad;
     private String fecha;
     private String pais;
     private  String imagen;
@@ -64,11 +64,11 @@ public class Jugador  implements Serializable {
         this.puntaje = puntaje;
     }
 
-    public int getEdad() {
+    public String getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(String edad) {
         this.edad = edad;
     }
 
