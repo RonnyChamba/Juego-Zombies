@@ -10,10 +10,22 @@
     <!-- Nuevo Jugador -->
     <string name="txtTitleRegistro">Nuevo Jugador</string>
     <string name="txtNombre">Nombre</string>
+    <string name="txtEdad">Edad</string>
+    <string name="txtPais">Pais</string>
     <string name="txtEmail">Email</string>
     <string name="txtPassword">Contraseña</string>
     <string name="btnRegistrar">Registrar</string>
     <string name="txtFecha">Fecha</string>
+    <string-array name="lisPaises">
+
+
+        <item >Ecuador</item>
+        <item >Colombia</item>
+        <item >Peru</item>
+        <item >Venezuela</item>
+        <item >Argentina</item>
+    </string-array>
+
 
     <dimen name="mg_tb">10dp</dimen>
     <dimen name="btnFontSize">18dp</dimen>
@@ -27,13 +39,21 @@
 
     <!-- Activity Menu-->
     <string name="txtTitleMenu">MI PUNTUACION</string>
+    <string name="txtTitlePerfil">MI PERFIL</string>
     <string name="txtSubTitleMenu">MENU</string>
 
     <string name="btnJugarMenu">JUGAR</string>
     <string name="btnPuntuMenu">PUNTUACIONES</string>
+    <string name="btnEditar">EDITAR</string>
+    <string name="btnCambiarPass">CAMBIAR CONTRASEÑA</string>
     <string name="btnAcercaMenu">ACERCA DE</string>
     <string name="btnSalirMenu">SALIR</string>
     <string name="play">play</string>
+
+    <string name="itemPerfil">Ver Perfil</string>
+    <string name="itemAcerca">Acerca de</string>
+    <string name="itemCerrarSesion">Cerrar Sesion</string>
+
 
     <!-- GAMEOVER-->
     <string name="seacaboTxt">¡Se acabo el tiempo!</string>

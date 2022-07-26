@@ -12,6 +12,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
     private EditText txtPassword;
     private EditText txtNombre;
     private TextView txtFecha;
+    private TextView txtEdad;
+    private Spinner txtPais;
 
     private Button btnRegistrar;
 
@@ -68,6 +71,9 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
         txtNombre = findViewById(R.id.txtNombre);
         txtPassword = findViewById(R.id.txtPassword);
         txtFecha = findViewById(R.id.txtFecha);
+        txtEdad = findViewById(R.id.txtEdad);
+        txtPais = findViewById(R.id.txtPais);
+
         btnRegistrar = findViewById(R.id.btnRegistrar);
     }
 
@@ -160,6 +166,8 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
         String uidString = user.getUid();
         String nombre = txtNombre.getText().toString();
         String fecha = txtFecha.getText().toString();
+        String edad = txtEdad.getText().toString();
+        String pais = txtPais.getSelectedItem().toString();
         String email = txtEmail.getText().toString();
         String password = txtPassword.getText().toString();
 
@@ -171,8 +179,10 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
         datosJugador.put("Password", password);
         datosJugador.put("Nombres", nombre);
         datosJugador.put("Fecha", fecha);
+        datosJugador.put("Edad", edad);
+        datosJugador.put("Pais", pais);
+        datosJugador.put("Imagen", "");
         datosJugador.put("Zombies", contador+"");
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         // NOMBRE BASE DATOS
         DatabaseReference reference = database.getReference(Constantes.NAME_BD);

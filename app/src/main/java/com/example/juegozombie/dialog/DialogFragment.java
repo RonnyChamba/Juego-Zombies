@@ -1,5 +1,7 @@
 package com.example.juegozombie.dialog;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.juegozombie.Menu;
 import com.example.juegozombie.R;
 import com.example.juegozombie.commons.Disegno;
 
@@ -26,8 +29,6 @@ public class DialogFragment  extends androidx.fragment.app.DialogFragment {
 
         this.zombies = zombies;
     }
-
-
    public  DialogFragment(){}
 
     @Nullable
@@ -54,8 +55,17 @@ public class DialogFragment  extends androidx.fragment.app.DialogFragment {
         jugarDeNuevo = view.findViewById(R.id.jugarDeNuevo);
         irMenu = view.findViewById(R.id.irMenu);
         puntajes = view.findViewById(R.id.puntajes);
-        numeroTxt.setText(zombies);
 
+        jugarDeNuevo.setOnClickListener((vi) -> {
+
+            this.dismiss();
+        });
+
+        irMenu.setOnClickListener( (vi) ->{
+
+            startActivity( new Intent( getContext(),Menu.class ));
+        });
+        numeroTxt.setText(zombies);
         seAcaboTxt.setTypeface(typeface);
         hasMatadoTxt.setTypeface(typeface);
         numeroTxt.setTypeface(typeface);
