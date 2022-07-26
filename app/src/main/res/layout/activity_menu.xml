@@ -34,8 +34,9 @@
                 android:src="@drawable/calabaza_login"
                 android:id="@+id/imgPerfil"
                 android:layout_marginTop="5dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"/>
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_marginBottom="@dimen/mg_tb" />
 
             <TextView
                 android:id="@+id/txtCorreoJugadorMenu"

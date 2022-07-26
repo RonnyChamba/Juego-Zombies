@@ -1,13 +1,19 @@
 package com.example.juegozombie;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -24,6 +30,7 @@ import com.bumptech.glide.Glide;
 import com.example.juegozombie.commons.Constantes;
 import com.example.juegozombie.commons.Disegno;
 import com.example.juegozombie.entities.Jugador;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +41,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -71,6 +80,21 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
     private ImageView imagen;
     private CircleImageView imgPerfil;
 
+    /* Para cambiar foto perfil*/
+
+    private StorageReference referenciaAlmacenamiento;
+    private String rutaAlmecamiento = "FotosDePerfil/*";
+
+    /*Permisos*/
+    private static final int CODIGO_SOLICITUD_ALMACENAMIENTO = 200;
+    private static final int CODIGO_SELECCION_IMAGEN = 300;
+
+    /*MATRICES*/
+    private String[] permisosAlmacenamiento;
+    private Uri imagenUri;
+    private String perfil; // nombre column
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +124,10 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference(Constantes.NAME_BD);
+
+        // Iniciar para cambiar foto perfil
+        referenciaAlmacenamiento = FirebaseStorage.getInstance().getReference();
+        permisosAlmacenamiento = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
     }
 
     private void findByWidget() {
@@ -208,6 +236,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
 
             if (index == 0) {
 
+                perfil = "Imagen";
                 actualizarFoto();
             } else if (index == 1) {
 
@@ -229,22 +258,22 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Actualizar Pais");
 
-        LinearLayout linearLayout =  new LinearLayout(this);
+        LinearLayout linearLayout = new LinearLayout(this);
 
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setPadding(5, 5,5,5);
+        linearLayout.setPadding(5, 5, 5, 5);
 
 
         Spinner spinner = new Spinner(this);
 
-        String paises [] = {"Ecuador", "Colombia", "Peru", "Venezuela", "Argentina"};
-        spinner.setAdapter( new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, paises));
+        String paises[] = {"Ecuador", "Colombia", "Peru", "Venezuela", "Argentina"};
+        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, paises));
         linearLayout.addView(spinner);
         builder.setView(linearLayout);
 
-        builder.setPositiveButton("Actualizar", (di, index) ->{
+        builder.setPositiveButton("Actualizar", (di, index) -> {
 
-            String value =  spinner.getSelectedItem().toString();
+            String value = spinner.getSelectedItem().toString();
             Map<String, Object> mapa = new HashMap<>();
             mapa.put("Pais", value);
 
@@ -252,14 +281,14 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
                     .addOnSuccessListener((unsed) -> {
 
                         Toast.makeText(Menu.this, "Pais actualizado", Toast.LENGTH_SHORT).show();
-                    }).addOnFailureListener(  (exception) ->{
+                    }).addOnFailureListener((exception) -> {
 
                         Toast.makeText(Menu.this, "Error " + exception.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         });
 
 
-        builder.setNegativeButton("Cancelar", (di, index) ->{
+        builder.setNegativeButton("Cancelar", (di, index) -> {
         });
 
         builder.create().show();
@@ -272,10 +301,10 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Actualizar Edad");
 
-        LinearLayout linearLayout =  new LinearLayout(this);
+        LinearLayout linearLayout = new LinearLayout(this);
 
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setPadding(5, 5,5,5);
+        linearLayout.setPadding(5, 5, 5, 5);
 
         EditText editText = new EditText(this);
         editText.setHint("Ingrese nueva edad");
@@ -283,11 +312,11 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
         linearLayout.addView(editText);
         builder.setView(linearLayout);
 
-        builder.setPositiveButton("Actualizar", (di, index) ->{
+        builder.setPositiveButton("Actualizar", (di, index) -> {
 
             String value = editText.getText().toString();
 
-            value =value.isEmpty() ? "0": value;
+            value = value.isEmpty() ? "0" : value;
 
             Map<String, Object> mapa = new HashMap<>();
             mapa.put("Edad", value);
@@ -295,15 +324,15 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
             databaseReference.child(user.getUid()).updateChildren(mapa)
                     .addOnSuccessListener((unsed) -> {
 
-                    Toast.makeText(Menu.this, "Edad actualizada", Toast.LENGTH_SHORT).show();
-                    }).addOnFailureListener(  (exception) ->{
+                        Toast.makeText(Menu.this, "Edad actualizada", Toast.LENGTH_SHORT).show();
+                    }).addOnFailureListener((exception) -> {
 
                         Toast.makeText(Menu.this, "Error " + exception.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         });
 
 
-        builder.setNegativeButton("Cancelar", (di, index) ->{
+        builder.setNegativeButton("Cancelar", (di, index) -> {
         });
 
         builder.create().show();
@@ -312,6 +341,168 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void actualizarFoto() {
+        String[] opciones = {"Galeria"};
+
+        AlertDialog.Builder buider = new AlertDialog.Builder(this);
+        buider.setTitle("Selecciona imagen");
+        buider.setItems(opciones, new DialogInterface.OnClickListener() {
+
+
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(DialogInterface dialogInterface, int index) {
+
+                // Galeria
+                if (index == 0) {
+
+                    if (!comprobarPermisoAlmacenamiento()) {
+
+                        solicitarPermisoAlmacenamiento();
+
+                    } else elegirImagenGaleria();
+
+                }
+            }
+        });
+
+
+        buider.create().show();
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void solicitarPermisoAlmacenamiento() {
+
+        requestPermissions(permisosAlmacenamiento, CODIGO_SOLICITUD_ALMACENAMIENTO);
+    }
+
+    /**
+     * Verifica si los permisos de almacenamientos estan habilitados o no
+     *
+     * @return
+     */
+    private boolean comprobarPermisoAlmacenamiento() {
+
+
+        boolean resultado = ContextCompat.
+                checkSelfPermission(
+                        Menu.this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                (PackageManager.PERMISSION_GRANTED);
+
+        return resultado;
+    }
+
+
+    /**
+     * Se llama cuando el usuario permite| denega el cuadro de dialogo
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+
+
+            case CODIGO_SOLICITUD_ALMACENAMIENTO: {
+
+                if (grantResults.length > 0) {
+
+                    boolean escrituraAlmacenamientoAcertado = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if (escrituraAlmacenamientoAcertado) {
+
+                        // Permiso fue habilitado
+
+                        elegirImagenGaleria();
+                    } else
+                        Toast.makeText(this, "Habilite Permiso de la Galeria", Toast.LENGTH_SHORT).show();
+
+
+                }
+
+            } break;
+        }
+
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
+    /**
+     * Se llama cuando el jugador ya ha elegido la imagen
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (resultCode == RESULT_OK) {
+
+            // De la img vamos obtener la URI
+            if (requestCode == CODIGO_SELECCION_IMAGEN) {
+
+                imagenUri = data.getData();
+
+                subirFoto(imagenUri);
+            }
+        }
+
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * Cambia la foto de perfil y actualizado en la base de datos
+     *
+     * @param imagenUri
+     */
+    private void subirFoto(Uri imagenUri) {
+
+
+        String rutaArchivoNombre = rutaAlmecamiento + "" + perfil + "" + user.getUid();
+
+        StorageReference storageReference = referenciaAlmacenamiento.child(rutaArchivoNombre);
+        storageReference.putFile(imagenUri).addOnSuccessListener(taskSnapshot -> {
+
+            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+            while (!uriTask.isSuccessful()) ;
+
+            Uri dowloadUri = uriTask.getResult();
+            if (uriTask.isSuccessful()) {
+
+                Map<String, Object> resultado = new HashMap<>();
+                resultado.put(perfil, dowloadUri.toString());
+
+                databaseReference.child(user.getUid()).updateChildren(resultado)
+                        .addOnSuccessListener((unsed) -> {
+
+                            Toast.makeText(Menu.this, "Imagen perfil actualizada con exito", Toast.LENGTH_SHORT).show();
+
+                        }).addOnFailureListener((exception) -> {
+
+                            Toast.makeText(Menu.this, "Ha ocurrido un error " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+            } else Toast.makeText(Menu.this, "Algo a salido mal", Toast.LENGTH_SHORT).show();
+        }).addOnFailureListener((exception) -> {
+
+            Toast.makeText(Menu.this, "Algo a ido mal " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+
+    }
+
+    /**
+     * Abre la galeria
+     */
+    private void elegirImagenGaleria() {
+
+        Intent intentGaleria = new Intent(Intent.ACTION_PICK);
+        intentGaleria.setType("image/*");
+        startActivityForResult(intentGaleria, CODIGO_SELECCION_IMAGEN);
     }
 
     private void cerrarSesion() {
