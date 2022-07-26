@@ -79,6 +79,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
     private Jugador currentPlayer;
     private ImageView imagen;
     private CircleImageView imgPerfil;
+    private ImageView imgEditar;
 
     /* Para cambiar foto perfil*/
 
@@ -142,6 +143,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
         txtSubTitleMenu = findViewById(R.id.txtSubTitleMenu);
         txtCorreoJugaMenu = findViewById(R.id.txtCorreoJugadorMenu);
         txtNombreJugaMenu = findViewById(R.id.txtNombreJugadorMenu);
+        imgEditar = findViewById(R.id.imgEditar);
         imgPerfil = findViewById(R.id.imgPerfil);
 
         btnJugar = findViewById(R.id.btnJugar);
@@ -160,6 +162,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
         btnCerrarSesion.setOnClickListener(this);
         btnEditar.setOnClickListener(this);
         btnCambiasPass.setOnClickListener(this);
+        imgEditar.setOnClickListener(this);
     }
 
     private void setTypeFont() {
@@ -222,12 +225,14 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
             cerrarSesion();
         } else if (id == btnEditar.getId()) {
             editarDatos();
+        } else if (id == imgEditar.getId()) {
+            actualizarFoto();
         }
     }
 
     private void editarDatos() {
 
-        String[] opciones = {"Foto Perfil", "Cambiar Edad", "Cambiar Pais"};
+        String[] opciones = {"Cambiar Edad", "Cambiar Pais"};
 
         AlertDialog.Builder buider = new AlertDialog.Builder(this);
         buider.setTitle("Editar Datos");
@@ -235,14 +240,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
 
 
             if (index == 0) {
-
-                perfil = "Imagen";
-                actualizarFoto();
-            } else if (index == 1) {
-
                 actualizarEdad();
-            } else if (index == 2) {
-
+            } else if (index == 1) {
                 actualizarPais();
             }
 
@@ -341,6 +340,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void actualizarFoto() {
+
+        perfil = "Imagen";
         String[] opciones = {"Galeria"};
 
         AlertDialog.Builder buider = new AlertDialog.Builder(this);
@@ -423,7 +424,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
 
                 }
 
-            } break;
+            }
+            break;
         }
 
 

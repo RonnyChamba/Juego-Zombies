@@ -30,13 +30,27 @@
                 android:textColor="@color/color_botones"
                 android:text="@string/txtTitlePerfil"/>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:src="@drawable/calabaza_login"
-                android:id="@+id/imgPerfil"
-                android:layout_marginTop="5dp"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_marginBottom="@dimen/mg_tb" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/mg_tb"
+                android:layout_marginBottom="@dimen/mg_tb"
+                android:gravity="center">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:src="@drawable/calabaza_login"
+                    android:id="@+id/imgPerfil"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_marginEnd="3dp"/>
+                <ImageView
+                    android:id="@+id/imgEditar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_edit"
+                    />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtCorreoJugadorMenu"
