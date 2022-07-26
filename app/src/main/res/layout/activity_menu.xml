@@ -38,7 +38,7 @@
                 android:layout_marginBottom="@dimen/mg_tb"
                 android:gravity="center">
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:src="@drawable/calabaza_login"
+                    android:src="@drawable/default_perfil"
                     android:id="@+id/imgPerfil"
                     android:layout_width="140dp"
                     android:layout_height="140dp"

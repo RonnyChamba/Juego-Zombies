@@ -2,7 +2,7 @@ package com.example.juegozombie.entities;
 
 import java.io.Serializable;
 
-public class Jugador  implements Serializable {
+public class Jugador  implements Serializable, Comparable<Jugador> {
 
     private String uId;
     private  String email;
@@ -105,5 +105,13 @@ public class Jugador  implements Serializable {
                 ", password='" + password + '\'' +
                 ", puntaje=" + puntaje +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Jugador o) {
+
+
+        Jugador jugador =  o;
+        return Integer.compare( this.getPuntaje(), ((Jugador) o).getPuntaje());
     }
 }

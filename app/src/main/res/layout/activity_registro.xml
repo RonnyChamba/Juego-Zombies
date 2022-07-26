@@ -31,11 +31,12 @@
                 android:textSize="@dimen/sizeTitle"
                 android:textStyle="bold" />
 
-            <ImageView
+
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView2"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:srcCompat="@drawable/calabaza_registro" />
+                android:src="@drawable/default_perfil"/>
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout

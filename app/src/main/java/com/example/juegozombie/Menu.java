@@ -219,7 +219,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
             jugar();
 
         } else if (id == btnPuntuacion.getId()) {
-
+            startActivity( new Intent(this, Puntajes.class));
         } else if (id == btnAcercaDe.getId()) {
         } else if (id == btnCerrarSesion.getId()) {
             cerrarSesion();
@@ -546,7 +546,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
 
                 if (!currentPlayer.getImagen().equals("")) {
                     Picasso.get().load(currentPlayer.getImagen()).into(imgPerfil);
-                } else Picasso.get().load(R.drawable.calabaza_login).into(imgPerfil);
+                } else Picasso.get().load(R.drawable.default_perfil).into(imgPerfil);
 
             }
 

@@ -19,11 +19,11 @@
     <string-array name="lisPaises">
 
 
-        <item >Ecuador</item>
-        <item >Colombia</item>
-        <item >Peru</item>
-        <item >Venezuela</item>
-        <item >Argentina</item>
+        <item>Ecuador</item>
+        <item>Colombia</item>
+        <item>Peru</item>
+        <item>Venezuela</item>
+        <item>Argentina</item>
     </string-array>
 
 
