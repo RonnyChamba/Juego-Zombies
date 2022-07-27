@@ -28,7 +28,7 @@
 
 
     <dimen name="mg_tb">10dp</dimen>
-    <dimen name="btnFontSize">18dp</dimen>
+    <dimen name="btnFontSize">18sp</dimen>
 
     <!-- Activity Login-->
 

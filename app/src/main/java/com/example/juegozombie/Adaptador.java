@@ -1,6 +1,7 @@
 package com.example.juegozombie;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,7 +89,9 @@ public class Adaptador extends  RecyclerView.Adapter<Adaptador.MyHolder>{
         // Click sobre la filla del jugador
         holder.itemView.setOnClickListener( (even) ->{
 
-            Toast.makeText(context,  jugadorTemp.getEmail(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, DetalleJugador.class);
+            intent.putExtra("jugadorClick", jugadorTemp);
+            context.startActivity(intent);
 
         });
 
