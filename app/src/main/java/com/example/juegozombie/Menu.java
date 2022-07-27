@@ -6,6 +6,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -29,6 +31,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.juegozombie.commons.Constantes;
 import com.example.juegozombie.commons.Disegno;
+import com.example.juegozombie.dialog.DialogFragment;
+import com.example.juegozombie.dialog.DialogFragmentAcerca;
 import com.example.juegozombie.entities.Jugador;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -225,6 +229,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
             startActivity( new Intent(Menu.this, CambioPassword.class));
 
         } else if (id == btnAcercaDe.getId()) {
+            openDialogAbouth();
         } else if (id == btnCerrarSesion.getId()) {
             cerrarSesion();
         } else if (id == btnEditar.getId()) {
@@ -232,6 +237,20 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
         } else if (id == imgEditar.getId()) {
             actualizarFoto();
         }
+    }
+
+    private void openDialogAbouth() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DialogFragmentAcerca dialog = new DialogFragmentAcerca();
+        dialog.setCancelable(false);
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // For a little polish, specify a transition animation
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        // To make it fullscreen, use the 'content' root view as the container
+        // for the fragment, which is always the root view for the activity
+        transaction.add(android.R.id.content, dialog)
+                .addToBackStack(null).commit();
     }
 
     private void editarDatos() {
