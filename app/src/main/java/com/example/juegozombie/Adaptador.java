@@ -2,12 +2,14 @@ package com.example.juegozombie;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,18 +49,15 @@ public class Adaptador extends  RecyclerView.Adapter<Adaptador.MyHolder>{
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
-        String  imgPerfil = jugadorList.get(position).getImagen();
-        String   nombre = jugadorList.get(position).getNombres();
-        String  zombies = jugadorList.get(position).getPuntaje() +"";
-        String  email = jugadorList.get(position).getEmail();
-        String  pais = jugadorList.get(position).getPais();
+        // Obtener datos del modelo, recibo desde Puntajes
+        Jugador jugadorTemp = jugadorList.get(position);
 
-        holder.txtNombreJugador.setText(nombre);
-        holder.txtCorreoJugador.setText(email);
-        holder.txtPuntajeJugador.setText(zombies);
+        holder.txtNombreJugador.setText(jugadorTemp.getNombres());
+        holder.txtCorreoJugador.setText(jugadorTemp.getEmail());
+        holder.txtPuntajeJugador.setText( String.valueOf(jugadorTemp.getPuntaje()));
+
         int codigoImg = 0;
-
-        switch (pais) {
+        switch (jugadorTemp.getPais()) {
 
             case "Ecuador" : codigoImg = R.drawable.flag_ecuador;
                 break;
@@ -80,18 +79,20 @@ public class Adaptador extends  RecyclerView.Adapter<Adaptador.MyHolder>{
                 break;
         }
 
-        //holder.imgPaisJugador.setImageResource(codigoImg);
         Picasso.get().load(codigoImg).into(holder.imgPaisJugador);
 
-        if (!imgPerfil.equals("")){
-            Picasso.get().load(imgPerfil).into(holder.imagenJugador);
+        if (!jugadorTemp.getImagen().equals("")){
+            Picasso.get().load(jugadorTemp.getImagen()).into(holder.imagenJugador);
         }else Picasso.get().load(R.drawable.default_perfil).into(holder.imagenJugador);
 
+        // Click sobre la filla del jugador
+        holder.itemView.setOnClickListener( (even) ->{
 
+            Toast.makeText(context,  jugadorTemp.getEmail(), Toast.LENGTH_SHORT).show();
 
+        });
 
     }
-
     @Override
     public int getItemCount() {
         return jugadorList.size();

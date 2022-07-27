@@ -88,6 +88,9 @@ public class Puntajes extends AppCompatActivity {
                     jugador.setPuntaje( Integer.parseInt( ds.child("Zombies").getValue().toString()));
                     jugador.setPais(ds.child("Pais").getValue().toString());
                     jugador.setImagen(ds.child("Imagen").getValue().toString());
+                    jugador.setEdad(ds.child("Edad").getValue().toString());
+                    jugador.setFecha(ds.child("Fecha").getValue().toString());
+                    jugador.setuId(ds.child("Uid").getValue().toString());
 
                     usuarioList.add(jugador);
                     Collections.sort(usuarioList);
