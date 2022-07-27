@@ -15,6 +15,9 @@
         android:theme="@style/Theme.JuegoZombie"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".CambioPassword"
+            android:exported="false" />
+        <activity
             android:name=".DetalleJugador"
             android:exported="false" />
         <activity

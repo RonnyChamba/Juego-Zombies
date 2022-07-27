@@ -220,6 +220,10 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
 
         } else if (id == btnPuntuacion.getId()) {
             startActivity( new Intent(this, Puntajes.class));
+        } else if (id == btnCambiasPass.getId()) {
+
+            startActivity( new Intent(Menu.this, CambioPassword.class));
+
         } else if (id == btnAcercaDe.getId()) {
         } else if (id == btnCerrarSesion.getId()) {
             cerrarSesion();

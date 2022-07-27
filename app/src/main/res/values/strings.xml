@@ -64,4 +64,10 @@
     <string name="puntajes">VER PUNTAJES</string>
 
 
+    <!-- CAMBIO PASSWORD-->
+    <string name="txtActualPassCambio">Actual Contraseña</string>
+    <string name="txtNuevaPassCambio">Nueva Contraseña</string>
+    <string name="btnPassCambio">Guardar Cambios</string>
+    <string name="txtTitleCambio">Cambiar Contraseña</string>
+
 </resources>
