@@ -31,11 +31,11 @@
                 android:textColor="@color/white"
                 android:layout_height="wrap_content"/>
 
-            <ImageView
-                android:id="@+id/imageView3"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView2"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:srcCompat="@drawable/calabaza_login" />
+                android:src="@drawable/default_perfil"/>
         </LinearLayout>
 
 

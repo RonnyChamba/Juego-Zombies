@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentOnAttachListener;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -66,6 +68,8 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escenario_juego);
+        // PAara que no se pueda poner horizontal esta activity
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initApp();
     }
 
@@ -247,4 +251,9 @@ public class EscenarioJuego extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        // para que no puede ir atras
+        //super.onBackPressed();
+    }
 }

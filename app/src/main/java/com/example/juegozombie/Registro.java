@@ -3,6 +3,7 @@ package com.example.juegozombie;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Path;
 import android.graphics.Typeface;
@@ -46,6 +47,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
 
     private TextView txtTitle;
     private FirebaseAuth auth; // Firebase Autenticacion
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +114,9 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
         String password = txtPassword.getText().toString();
 
         if (validFields(email, password)) {
+            progressDialog = new ProgressDialog(Registro.this);
+            progressDialog.setTitle("Registrando Jugador, espere por favor");
+            progressDialog.setCancelable(false);
             registerPlayFirebase(email, password);
         }
 
@@ -144,15 +149,18 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void registerPlayFirebase(String email, String password){
+        progressDialog.show();
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((task) ->{
             // Si el jugador fue registrado correctamente
             if (task.isSuccessful()){
+                progressDialog.dismiss();
                 armarJugador();
             }else
                 Toast.makeText(Registro.this, "Ha ocurrido un error", Toast.LENGTH_LONG).show();
 
         })   // SI falla el registro
                 .addOnFailureListener( (e) ->{
+                    progressDialog.dismiss();
                     Toast.makeText(Registro.this, e.getMessage(), Toast.LENGTH_LONG).show();
         });
     }

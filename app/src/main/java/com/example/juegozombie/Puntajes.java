@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.juegozombie.commons.Constantes;
@@ -109,7 +110,9 @@ public class Puntajes extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
 
-        onBackPressed();
+        startActivity(new Intent(this, Menu.class));
+        ///onBackPressed();
+
         return super.onSupportNavigateUp();
     }
 }

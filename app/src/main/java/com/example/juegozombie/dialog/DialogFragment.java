@@ -18,6 +18,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.juegozombie.Menu;
+import com.example.juegozombie.Puntajes;
 import com.example.juegozombie.R;
 import com.example.juegozombie.commons.Disegno;
 
@@ -64,6 +65,10 @@ public class DialogFragment  extends androidx.fragment.app.DialogFragment {
         irMenu.setOnClickListener( (vi) ->{
 
             startActivity( new Intent( getContext(),Menu.class ));
+        });
+        puntajes.setOnClickListener( (vi) ->{
+            this.dismiss();
+            startActivity( new Intent(   getContext(), Puntajes.class));
         });
         numeroTxt.setText(zombies);
         seAcaboTxt.setTypeface(typeface);

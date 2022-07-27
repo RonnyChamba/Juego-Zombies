@@ -2,6 +2,7 @@ package com.example.juegozombie;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener {
 
     private EditText txtEmailLogin;
     private EditText txtPassLogin;
-
+    private ProgressDialog progressDialog;
     private Button btnLogin;
 
     private TextView txtTitle;
@@ -77,6 +78,11 @@ public class Login extends AppCompatActivity  implements View.OnClickListener {
         String password = txtPassLogin.getText().toString();
 
         if (validFields(email, password)){
+
+            progressDialog = new ProgressDialog(Login.this);
+            progressDialog.setTitle("Ingresando, espere por favor");
+            progressDialog.setCancelable(false);
+
             accederJugador(email, password);
         }
     }
@@ -100,9 +106,11 @@ public class Login extends AppCompatActivity  implements View.OnClickListener {
 
     private void accederJugador(String email, String password){
 
+        progressDialog.show();
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener( (task) ->{
 
             if (task.isSuccessful()){
+                progressDialog.dismiss();
                 FirebaseUser user = auth.getCurrentUser();
                 startActivity(new Intent(Login.this, Menu.class));
                 assert  user !=null;
@@ -111,6 +119,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener {
             }
 
         }).addOnFailureListener( (exception)->{
+            progressDialog.dismiss();
             //Toast.makeText(Login.this, exception.getMessage(), Toast.LENGTH_LONG).show();
             Toast.makeText(Login.this, "Jugador no registrado", Toast.LENGTH_LONG).show();
         });
